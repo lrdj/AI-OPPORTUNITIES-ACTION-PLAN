@@ -4,3 +4,23 @@
 // 
 
 // Add extra styles here
+
+.kpi-card {
+  border: 1px solid #b1b4b6;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: #f3f2f1;
+}
+.kpi-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.kpi-label {
+  color: #505a5f;
+}
+
+/* Ensure chart canvases fit nicely */
+canvas {
+  width: 100% !important;
+}

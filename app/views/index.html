@@ -1,19 +1,37 @@
 {% extends "layouts/main.html" %}
 
-{% set pageName="Home" %}
+{% set pageName="AI Delivery Dashboard" %}
 
 {% block content %}
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">Department for Science, Innovation and Technology</span>
+    <h1 class="govuk-heading-xl">{{ serviceName }}</h1>
+    <p class="govuk-body-l">A clear, accessible view of progress delivering UK AI priorities. Built with the GOV.UK Design System for robust accessibility and consistent user experience.</p>
 
-    {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
+    <div class="govuk-inset-text">
+      This prototype demonstrates an accessible alternative to infographic-heavy dashboards: real text, high contrast, keyboard access and data tables for every chart.
+    </div>
 
-    <h1 class="govuk-heading-xl">
-      {{ serviceName }}
-    </h1>
+    <p class="govuk-body">
+      Explore the interactive dashboard, or read the data in tables:
+    </p>
 
-    {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
+    <p class="govuk-body">
+      <a class="govuk-button govuk-!-margin-right-2" href="/dashboard" role="button">View dashboard</a>
+      <a class="govuk-link" href="#data">Skip to data tables</a>
+    </p>
+
+    <h2 class="govuk-heading-m">What this shows</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Key performance indicators (KPIs) such as funding and projects</li>
+      <li>Trends over time for funding commitments</li>
+      <li>Breakdown of pilots by public sector domain</li>
+      <li>Programme status split: planned, in delivery, and complete</li>
+    </ul>
+
+    <p class="govuk-body">The same data appears on the dashboard page as accessible charts with full table fallbacks.</p>
   </div>
 </div>
 

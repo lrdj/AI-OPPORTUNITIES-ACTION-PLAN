@@ -1,0 +1,238 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Dashboard" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">AI delivery dashboard</h1>
+    <p class="govuk-body-l">Accessible charts with full data table fallbacks. Use Tab to navigate controls, and screen readers get concise summaries.</p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-quarter">
+    <div class="kpi-card" role="group" aria-label="Projects funded">
+      <div class="kpi-value">{{ kpis[0].value }}</div>
+      <div class="kpi-label">{{ kpis[0].label }}</div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="kpi-card" role="group" aria-label="Total funding">
+      <div class="kpi-value">{{ kpis[1].value }}</div>
+      <div class="kpi-label">{{ kpis[1].label }}</div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="kpi-card" role="group" aria-label="Public sector pilots">
+      <div class="kpi-value">{{ kpis[2].value }}</div>
+      <div class="kpi-label">{{ kpis[2].label }}</div>
+    </div>
+  </div>
+  <div class="govuk-grid-column-one-quarter">
+    <div class="kpi-card" role="group" aria-label="SMEs engaged">
+      <div class="kpi-value">{{ kpis[3].value }}</div>
+      <div class="kpi-label">{{ kpis[3].label }}</div>
+    </div>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--visible govuk-!-margin-bottom-6">
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <span id="data" class="govuk-visually-hidden">Data tables start here</span>
+    <h2 class="govuk-heading-m">{{ lineSeries.title }}</h2>
+    <p class="govuk-visually-hidden" id="chart-line-desc">Line chart of monthly funding commitments from January to August.</p>
+    <canvas id="lineChart" role="img" aria-labelledby="chart-line-desc"></canvas>
+
+    <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
+      <summary class="govuk-details__summary"><span class="govuk-details__summary-text">View data as a table</span></summary>
+      <div class="govuk-details__text">
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m">{{ lineSeries.title }}</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Month</th>
+              <th scope="col" class="govuk-table__header">£m</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for l in lineSeries.labels %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">{{ l }}</th>
+              <td class="govuk-table__cell">{{ lineSeries.values[loop.index0] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <div class="govuk-grid-column-one-half">
+    <h2 class="govuk-heading-m">{{ barSeries.title }}</h2>
+    <p class="govuk-visually-hidden" id="chart-bar-desc">Bar chart showing pilots by public sector domain.</p>
+    <canvas id="barChart" role="img" aria-labelledby="chart-bar-desc"></canvas>
+
+    <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
+      <summary class="govuk-details__summary"><span class="govuk-details__summary-text">View data as a table</span></summary>
+      <div class="govuk-details__text">
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m">{{ barSeries.title }}</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Domain</th>
+              <th scope="col" class="govuk-table__header">Pilots</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for l in barSeries.labels %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">{{ l }}</th>
+              <td class="govuk-table__cell">{{ barSeries.values[loop.index0] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <h2 class="govuk-heading-m">{{ donutSeries.title }}</h2>
+    <p class="govuk-visually-hidden" id="chart-donut-desc">Donut chart showing programme status split.</p>
+    <canvas id="donutChart" role="img" aria-labelledby="chart-donut-desc"></canvas>
+
+    <details class="govuk-details govuk-!-margin-top-3" data-module="govuk-details">
+      <summary class="govuk-details__summary"><span class="govuk-details__summary-text">View data as a table</span></summary>
+      <div class="govuk-details__text">
+        <table class="govuk-table">
+          <caption class="govuk-table__caption govuk-table__caption--m">{{ donutSeries.title }}</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Status</th>
+              <th scope="col" class="govuk-table__header">Percent</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for l in donutSeries.labels %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">{{ l }}</th>
+              <td class="govuk-table__cell">{{ donutSeries.values[loop.index0] }}%</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</div>
+
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+<p class="govuk-body">Charts are decorative for sighted users but all values are available in tables. Colours meet WCAG contrast and patterns rely on shape/labels, not colour alone.</p>
+
+{% endblock %}
+
+{% block pageScripts %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha384-p8TqQn7kSLCzRkL+4gBr4CqAKF0lTj5d3U7X0hWNy8yX3nXc1c8mM0n7dS3vVnqg" crossorigin="anonymous"></script>
+  <script>
+    // Pass server data into the page safely
+    const lineSeries = {{ lineSeries | dump | safe }};
+    const barSeries = {{ barSeries | dump | safe }};
+    const donutSeries = {{ donutSeries | dump | safe }};
+
+    const govukColours = {
+      blue: '#1d70b8',
+      green: '#00703c',
+      red: '#d4351c',
+      yellow: '#ffdd00',
+      purple: '#4c2c92',
+      black: '#0b0c0c',
+      grey: '#b1b4b6'
+    };
+
+    function prefersReducedMotion() {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    function renderCharts() {
+      const common = {
+        plugins: {
+          legend: { display: false },
+          tooltip: { intersect: false, mode: 'index' }
+        },
+        animation: prefersReducedMotion() ? false : undefined,
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: { x: { grid: { color: govukColours.grey } }, y: { grid: { color: govukColours.grey } } }
+      };
+
+      const lineCtx = document.getElementById('lineChart');
+      if (lineCtx) {
+        lineCtx.height = 260;
+        new Chart(lineCtx, {
+          type: 'line',
+          data: {
+            labels: lineSeries.labels,
+            datasets: [{
+              label: lineSeries.title,
+              data: lineSeries.values,
+              borderColor: govukColours.blue,
+              backgroundColor: 'rgba(29, 112, 184, 0.15)',
+              pointRadius: 3,
+              tension: 0.2
+            }]
+          },
+          options: common
+        });
+      }
+
+      const barCtx = document.getElementById('barChart');
+      if (barCtx) {
+        barCtx.height = 260;
+        new Chart(barCtx, {
+          type: 'bar',
+          data: {
+            labels: barSeries.labels,
+            datasets: [{
+              label: barSeries.title,
+              data: barSeries.values,
+              backgroundColor: [govukColours.blue, govukColours.green, govukColours.purple, govukColours.red, govukColours.black, govukColours.yellow],
+              borderColor: govukColours.black
+            }]
+          },
+          options: Object.assign({}, common, { scales: { y: { beginAtZero: true, grid: { color: govukColours.grey } } } })
+        });
+      }
+
+      const donutCtx = document.getElementById('donutChart');
+      if (donutCtx) {
+        donutCtx.height = 260;
+        new Chart(donutCtx, {
+          type: 'doughnut',
+          data: {
+            labels: donutSeries.labels,
+            datasets: [{
+              label: donutSeries.title,
+              data: donutSeries.values,
+              backgroundColor: [govukColours.blue, govukColours.green, govukColours.grey],
+              borderColor: govukColours.black
+            }]
+          },
+          options: Object.assign({}, common, { cutout: '55%' })
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderCharts);
+    } else {
+      renderCharts();
+    }
+  </script>
+{% endblock %}
