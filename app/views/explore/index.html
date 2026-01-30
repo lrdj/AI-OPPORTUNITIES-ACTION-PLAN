@@ -1,0 +1,21 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Explore AI opportunities" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Explore AI opportunities</h1>
+    <p class="govuk-body-l">Browse areas where AI is creating value across the economy and public services. Each section links to a focused page with examples, metrics and relevant links.</p>
+
+    {{ govukAccordion({
+      id: 'explore-accordion',
+      items: sections | map(item => ({
+        heading: { text: item.title },
+        content: { html: "<p class='govuk-body'>" + item.summary + "</p><p class='govuk-body'><a class='govuk-link' href='/explore/" + item.slug + "'>Open this section</a></p>" }
+      }))
+    }) }}
+  </div>
+</div>
+{% endblock %}
+

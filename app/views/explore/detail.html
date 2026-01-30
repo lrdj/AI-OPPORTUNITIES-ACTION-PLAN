@@ -1,0 +1,41 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = title %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% if notFound %}
+      {{ govukErrorSummary({
+        titleText: 'Section not found',
+        errorList: [ { text: 'We could not find ‘' + slug + '’. Go back to Explore.', href: '#content' } ]
+      }) }}
+      <p class="govuk-body"><a class="govuk-link" href="/explore">Back to Explore</a></p>
+    {% else %}
+      <span class="govuk-caption-l">Explore AI opportunities</span>
+      <h1 class="govuk-heading-xl">{{ title }}</h1>
+      <p class="govuk-body-l">This page summarises opportunities, progress and references. Content here is a placeholder; we’ll populate it with the live site’s structure and copy once confirmed.</p>
+
+      <h2 class="govuk-heading-m">Highlights</h2>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>Key opportunity 1</li>
+        <li>Key opportunity 2</li>
+        <li>Key opportunity 3</li>
+      </ul>
+
+      <h2 class="govuk-heading-m">Metrics</h2>
+      <p class="govuk-body">See the <a class="govuk-link" href="/dashboard">dashboard</a> for supporting figures.</p>
+
+      <h2 class="govuk-heading-m">Further reading</h2>
+      <ul class="govuk-list">
+        <li><a class="govuk-link" href="https://www.gov.uk/government/collections/ai-growth-zones" target="_blank" rel="noopener noreferrer">AI Growth Zones</a></li>
+        <li><a class="govuk-link" href="https://www.gov.uk/government/publications/ai-skills-boost-explainer" target="_blank" rel="noopener noreferrer">AI Skills Boost</a></li>
+        <li><a class="govuk-link" href="https://www.gov.uk/algorithmic-transparency-records/whitemail-insights-and-vulnerability-scanner" target="_blank" rel="noopener noreferrer">Algorithmic Transparency Record example</a></li>
+      </ul>
+
+      <p class="govuk-body"><a class="govuk-link" href="/explore">Back to Explore</a></p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
